@@ -40,14 +40,6 @@ const userSchema = mongoose.Schema(
       requre: true,
       default: false,
     },
-    tokens: [
-      {
-        token: {
-          type: String,
-          require: true,
-        },
-      },
-    ],
   },
   {
     timestamps: true,

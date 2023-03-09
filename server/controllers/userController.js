@@ -15,21 +15,6 @@ const authUser = async (req, res) => {
   }
 };
 
-// @desc    User sign out
-// @route   POST /api/users/signOut
-// @access  Public
-const userSignout = async (req, res) => {
-  try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token !== req.body.token;
-    });
-    await req.user.save();
-    res.send();
-  } catch (e) {
-    res.status(500).send(e);
-  }
-};
-
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
@@ -56,4 +41,4 @@ const getUsers = async (req, res) => {
   }
 };
 
-export { authUser, registerUser, getUsers, userSignout };
+export { authUser, registerUser, getUsers };
