@@ -1,4 +1,4 @@
-type Product = {
+type ProductType = {
   _id: { $oid: string };
   name: string;
   images: string[];
@@ -8,4 +8,4 @@ type Product = {
   price: number;
 };
 
-export type { Product };
+export type { ProductType };

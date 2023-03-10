@@ -1,4 +1,4 @@
-import { Product } from "../../types/Product.types";
+import { ProductType } from "../../types/Product.types";
 
 type SearchFormProps = {
   searchTerm: string;
@@ -7,15 +7,16 @@ type SearchFormProps = {
 };
 
 type SearchFilterProps = {
-  setFilterTerm: (value: string) => void;
+  filterCategory: string;
+  setFilterCategory: (value: string) => void;
 };
 
 type ProductListProps = {
-  productList: Product[];
+  productList: ProductType[];
 };
 
 type ProductProps = {
-  product: Product;
+  product: ProductType;
 };
 
 export type { SearchFormProps, SearchFilterProps, ProductListProps, ProductProps };

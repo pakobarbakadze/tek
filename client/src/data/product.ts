@@ -9,7 +9,7 @@ const productData = [
     name: "IPhone 13 Pro Max",
     images: ["https://assets.stickpng.com/images/61d2f85b92b57c0004c64745.png"],
     brand: "Apple",
-    category: "Phone",
+    category: "PHONE",
     description: "Apple Iphone",
     price: 3000,
     createdAt: {
@@ -34,7 +34,7 @@ const productData = [
     name: "IPhone 13 Pro Max",
     images: ["https://assets.stickpng.com/images/61d2f85b92b57c0004c64745.png"],
     brand: "Apple",
-    category: "Phone",
+    category: "PHONE",
     description: "Apple Iphone",
     price: 3000,
     createdAt: {
@@ -59,7 +59,7 @@ const productData = [
     name: "Apple MacBook Air",
     images: ["https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP825/macbookair.png"],
     brand: "Apple ",
-    category: "Laptop",
+    category: "COMPUTER",
     description: "Strong laptop from Apple.",
     price: 2900,
     createdAt: {
@@ -84,7 +84,7 @@ const productData = [
     name: "Apple MacBook Air",
     images: ["https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP825/macbookair.png"],
     brand: "Apple ",
-    category: "Laptop",
+    category: "COMPUTER",
     description: "Strong laptop from Apple.",
     price: 2900,
     createdAt: {
