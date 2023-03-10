@@ -54,7 +54,9 @@ const ProductList: React.FC<ProductListProps> = ({ productList }) => (
 
 const Product: React.FC<ProductProps> = ({ product }) => (
   <div className={classes.product}>
+    <img src={product.images[0]} alt="product preview" />
     <h1>{product.name}</h1>
+    <h4>{product.price}</h4>
   </div>
 );
 
