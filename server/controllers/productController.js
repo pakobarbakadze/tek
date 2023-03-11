@@ -1,5 +1,7 @@
 import Product from "../models/productModel.js";
 
+import fs from "fs";
+
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
@@ -59,18 +61,23 @@ const deleteProduct = async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const uploadProduct = async (req, res) => {
-  const { name, price, images, brand, category, description } = req.body;
+  const { name, price, brand, category, description } = req.body.data;
+  console.log(req.body);
+  console.log(req.file);
   try {
     const product = new Product({
       user: req.user._id,
-      uploader: req.user._id,
       name: name,
-      price: price,
-      images: images,
       brand: brand,
+      image: {
+        data: req.file.filename,
+        contentType: req.file.mimetype,
+      },
       category: category,
       description: description,
+      price: price,
     });
+
     const uploadedProduct = await product.save();
     res.status(201).json(uploadedProduct);
   } catch (e) {
@@ -82,8 +89,7 @@ const uploadProduct = async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+  const { name, price, description, image, brand, category, countInStock } = req.body;
 
   try {
     const product = await Product.findById(req.params.id);
@@ -103,10 +109,4 @@ const updateProduct = async (req, res) => {
   }
 };
 
-export {
-  getProducts,
-  getProductById,
-  deleteProduct,
-  uploadProduct,
-  updateProduct,
-};
+export { getProducts, getProductById, deleteProduct, uploadProduct, updateProduct };
