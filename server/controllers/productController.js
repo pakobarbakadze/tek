@@ -1,7 +1,5 @@
 import Product from "../models/productModel.js";
 
-import fs from "fs";
-
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
@@ -62,8 +60,6 @@ const deleteProduct = async (req, res) => {
 // @access  Private/Admin
 const uploadProduct = async (req, res) => {
   const { name, price, brand, category, description } = req.body.data;
-  console.log(req.body);
-  console.log(req.file);
   try {
     const product = new Product({
       user: req.user._id,
