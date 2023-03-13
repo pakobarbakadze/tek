@@ -15,7 +15,7 @@ import classes from "./Discover.module.css";
 import Pagination from "../Pagination/Pagination";
 
 const Discover = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [filterCategory, setFilterCategory] = useState<string>("ALL");
   const [productData, setProductData] = useState<ProductDataType>({
     page: 1,
@@ -24,9 +24,15 @@ const Discover = () => {
   });
 
   // Search for product on SearchForm submit.
-  const formSubmitHandler = (e: React.FormEvent<HTMLElement>) => {
+  const formSubmitHandler = (e: any) => {
     e.preventDefault();
-    setSearchTerm("");
+    setSearchKeyword(e.target.keyword.value);
+    e.target.keyword.value = "";
+  };
+
+  const filterClickHandler = (category: string) => {
+    setFilterCategory(category);
+    setSearchKeyword("");
   };
 
   // Set productList when page changes.
@@ -36,7 +42,7 @@ const Discover = () => {
         params: {
           pageNumber: productData.page,
           category: filterCategory,
-          keyword: searchTerm,
+          keyword: searchKeyword,
         },
       })
       .then((res) => {
@@ -50,60 +56,52 @@ const Discover = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [filterCategory, productData.page, searchTerm]);
+  }, [filterCategory, productData.page, searchKeyword]);
 
   return (
     <div className={classes.container}>
       <h1 className={classes.header}>Discover</h1>
-      <SearchForm
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        onFormSubmit={formSubmitHandler}
-      />
-      <SearchFilter filterCategory={filterCategory} setFilterCategory={setFilterCategory} />
+      <SearchForm onFormSubmit={formSubmitHandler} />
+      <SearchFilter filterCategory={filterCategory} filterClickHandler={filterClickHandler} />
       <ProductList productList={productData.productList} />
       <Pagination page={productData.page} pages={productData.pages} />
     </div>
   );
 };
 
-const SearchForm: React.FC<SearchFormProps> = ({ searchTerm, setSearchTerm, onFormSubmit }) => (
+const SearchForm: React.FC<SearchFormProps> = ({ onFormSubmit }) => (
   <div className={classes["search-form"]}>
     <form onSubmit={onFormSubmit}>
       <BsSearch />
-      <input
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search Product"
-      />
+      <input name="keyword" placeholder="Search Product" />
     </form>
   </div>
 );
 
-const SearchFilter: React.FC<SearchFilterProps> = ({ filterCategory, setFilterCategory }) => (
+const SearchFilter: React.FC<SearchFilterProps> = ({ filterCategory, filterClickHandler }) => (
   <div className={classes["search-filter"]}>
     <ul>
       <li
         id={filterCategory === "ALL" ? classes.selected : ""}
-        onClick={() => setFilterCategory("ALL")}
+        onClick={() => filterClickHandler("ALL")}
       >
         All
       </li>
       <li
         id={filterCategory === "PHONE" ? classes.selected : ""}
-        onClick={() => setFilterCategory("PHONE")}
+        onClick={() => filterClickHandler("PHONE")}
       >
         Phones
       </li>
       <li
         id={filterCategory === "HEADPHONE" ? classes.selected : ""}
-        onClick={() => setFilterCategory("HEADPHONE")}
+        onClick={() => filterClickHandler("HEADPHONE")}
       >
         HeadPhones
       </li>
       <li
         id={filterCategory === "COMPUTER" ? classes.selected : ""}
-        onClick={() => setFilterCategory("COMPUTER")}
+        onClick={() => filterClickHandler("COMPUTER")}
       >
         Computers
       </li>
