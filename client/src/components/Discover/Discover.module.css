@@ -38,6 +38,10 @@
   overflow-y: scroll;
 }
 
+.search-filter ul::-webkit-scrollbar {
+  display: none;
+}
+
 .search-filter ul li {
   list-style: none;
   background-color: var(--background-color-secondary);
@@ -63,8 +67,8 @@
 }
 
 .product img {
+  padding: 10px;
   width: 100%;
-  min-height: 160px;
   aspect-ratio: 4/5;
   object-fit: contain;
   background-color: var(--background-color-secondary);
@@ -81,4 +85,10 @@
   font-family: var(--font-family-secondary);
   font-weight: 400;
   color: var(--font-color-secondary);
+}
+
+@media screen and (min-width: 768px) {
+  .product {
+    flex: 0 1 calc(25% - 30px);
+  }
 }

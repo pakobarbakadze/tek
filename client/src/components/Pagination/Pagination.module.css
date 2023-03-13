@@ -1,0 +1,24 @@
+.pagination {
+  margin: 15px 0;
+}
+
+.pagination ul {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pagination ul li {
+  background-color: var(--background-color-secondary);
+  list-style: none;
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.pagination ul li#selected {
+  border: solid 1px black;
+}

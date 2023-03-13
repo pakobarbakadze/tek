@@ -61,7 +61,6 @@ const deleteProduct = async (req, res) => {
 // @access  Private/Admin
 const uploadProduct = async (req, res) => {
   const { name, price, brand, category, description } = req.body;
-  console.log(req.file);
   try {
     const product = new Product({
       user: req.user._id,

@@ -7,16 +7,22 @@ import {
   SearchFilterProps,
   ProductListProps,
   ProductProps,
+  ProductDataType,
 } from "./Discover.types";
 import { ProductType } from "../../types/Product.types";
 
 import { BsSearch } from "react-icons/bs";
 import classes from "./Discover.module.css";
+import Pagination from "../Pagination/Pagination";
 
 const Discover = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterCategory, setFilterCategory] = useState<string>("ALL");
-  const [productList, setProductList] = useState<any>([]);
+  const [productData, setProductData] = useState<ProductDataType>({
+    page: 1,
+    pages: 1,
+    productList: [],
+  });
   const [filteredProductList, setFilteredProductList] = useState<any>([]);
 
   // Search for product on SearchForm submit.
@@ -26,41 +32,49 @@ const Discover = () => {
     setSearchTerm("");
   };
 
-  // Set productList with data on first render.
+  // Set productList when page changes.
   useEffect(() => {
     axios
-      .get("/api/products")
+      .get("/api/products", {
+        params: {
+          pageNumber: productData.page,
+        },
+      })
       .then((res) => {
-        setProductList(res.data.products);
-        //console.log(res);
+        setProductData({
+          page: res.data.page,
+          pages: res.data.pages,
+          productList: res.data.products,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [productData.page]);
 
   // When productList or FilterCategory changes update filteredProductList
   useEffect(() => {
     setFilteredProductList(filterProduct());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productList, filterCategory]);
+  }, [productData, filterCategory]);
 
   // Function for filtering product.
   const filterProduct = useCallback(() => {
+    //console.log(productList)
     if (filterCategory !== "ALL") {
-      return productList.filter(
+      return productData.productList.filter(
         (product: ProductType) =>
           product.category === filterCategory &&
           product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else if (searchTerm !== "") {
-      return productList.filter((product: ProductType) =>
+      return productData.productList.filter((product: ProductType) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else {
-      return productList;
+      return productData.productList;
     }
-  }, [searchTerm, filterCategory, productList]);
+  }, [searchTerm, filterCategory, productData]);
 
   return (
     <div className={classes.container}>
@@ -72,6 +86,7 @@ const Discover = () => {
       />
       <SearchFilter filterCategory={filterCategory} setFilterCategory={setFilterCategory} />
       <ProductList productList={filteredProductList} />
+      <Pagination page={productData.page} pages={productData.pages} />
     </div>
   );
 };

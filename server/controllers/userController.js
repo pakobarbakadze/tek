@@ -16,7 +16,6 @@ const authUser = async (req, res) => {
     if (!isPassMatch) return res.status(401).send("Invalid password");
 
     const token = await user.generateAuthToken();
-    console.log(token);
 
     res.send({ user, token });
   } catch (e) {
