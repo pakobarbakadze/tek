@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import fs from "fs";
 
 // @desc    Fetch all products
 // @route   GET /api/products
@@ -59,14 +60,15 @@ const deleteProduct = async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const uploadProduct = async (req, res) => {
-  const { name, price, brand, category, description } = req.body.data;
+  const { name, price, brand, category, description } = req.body;
+  console.log(req.file);
   try {
     const product = new Product({
       user: req.user._id,
       name: name,
       brand: brand,
       image: {
-        data: req.file.filename,
+        buffer: fs.readFileSync(`./server/images/${req.file.filename}`),
         contentType: req.file.mimetype,
       },
       category: category,
@@ -74,8 +76,8 @@ const uploadProduct = async (req, res) => {
       price: price,
     });
 
-    const uploadedProduct = await product.save();
-    res.status(201).json(uploadedProduct);
+    await product.save();
+    res.status(201).json(product);
   } catch (e) {
     res.status(500).send(e);
   }

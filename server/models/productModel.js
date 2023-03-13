@@ -12,7 +12,7 @@ const productSchema = mongoose.Schema(
       requre: true,
     },
     image: {
-      data: Buffer,
+      buffer: Buffer,
       contentType: String,
     },
     brand: {

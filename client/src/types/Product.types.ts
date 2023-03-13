@@ -1,7 +1,7 @@
 type ProductType = {
-  _id: { $oid: string };
+  _id: string;
   name: string;
-  images: string[];
+  image: any;
   brand: string;
   category: string;
   description: string;
