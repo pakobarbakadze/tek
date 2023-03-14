@@ -17,10 +17,4 @@ type ProductProps = {
   product: ProductType;
 };
 
-type ProductDataType = {
-  page: number;
-  pages: number;
-  productList: [];
-};
-
-export type { SearchFormProps, SearchFilterProps, ProductListProps, ProductProps, ProductDataType };
+export type { SearchFormProps, SearchFilterProps, ProductListProps, ProductProps };

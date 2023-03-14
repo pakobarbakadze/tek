@@ -4,7 +4,7 @@ import classes from "./Pagination.module.css";
 
 import { PaginationProps } from "./Pagination.types";
 
-const Pagination: React.FC<PaginationProps> = ({ page, pages }) => {
+const Pagination: React.FC<PaginationProps> = ({ page, pages, setProductData }) => {
   const pagesArr = [];
 
   const minPage = page - 6 > 0 ? page - 6 : 1;
@@ -13,12 +13,15 @@ const Pagination: React.FC<PaginationProps> = ({ page, pages }) => {
   for (let i = minPage; i <= maxPage; i++) {
     pagesArr.push(i);
   }
-
   return (
     <div className={classes.pagination}>
       <ul>
         {pagesArr.map((element) => (
-          <li id={page === element ? classes.selected : ""} key={element}>
+          <li
+            id={page === element ? classes.selected : ""}
+            key={element}
+            onClick={() => setProductData((prev: any) => ({ ...prev, page: element }))}
+          >
             {element}
           </li>
         ))}

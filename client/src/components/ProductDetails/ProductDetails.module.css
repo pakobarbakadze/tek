@@ -1,0 +1,35 @@
+.header {
+  margin: 50px 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.header svg {
+  font-size: 28px;
+}
+
+.product-info img {
+  width: 100%;
+  background-color: var(--background-color-secondary);
+  border-radius: 10px;
+  height: 380px;
+  padding: 10px;
+  object-fit: contain;
+}
+
+.product-info h2 {
+  font-size: 1.5rem;
+  margin: 15px 0;
+}
+
+.product-info p {
+  font-size: 1rem;
+  color: var(--font-color-secondary);
+  line-height: 24px;
+}

@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
+import { useNavigate } from "react-router-dom";
 
 import {
   SearchFormProps,
   SearchFilterProps,
   ProductListProps,
   ProductProps,
-  ProductDataType,
 } from "./Discover.types";
 
 import { BsSearch } from "react-icons/bs";
-import classes from "./Discover.module.css";
+
 import Pagination from "../Pagination/Pagination";
+import LoadingSpinner from "../../ui/LoadingSpinner";
+
+import classes from "./Discover.module.css";
 
 const Discover = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [filterCategory, setFilterCategory] = useState<string>("ALL");
-  const [productData, setProductData] = useState<ProductDataType>({
+  const [productData, setProductData] = useState({
     page: 1,
     pages: 1,
     productList: [],
   });
+  const [loading, setLoading] = useState(false);
 
-  // Search for product on SearchForm submit.
   const formSubmitHandler = (e: any) => {
     e.preventDefault();
     setSearchKeyword(e.target.keyword.value);
@@ -33,10 +36,11 @@ const Discover = () => {
   const filterClickHandler = (category: string) => {
     setFilterCategory(category);
     setSearchKeyword("");
+    setProductData((prev) => ({ ...prev, page: 1 }));
   };
 
-  // Set productList when page changes.
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/api/products", {
         params: {
@@ -51,10 +55,12 @@ const Discover = () => {
           pages: res.data.pages,
           productList: res.data.products,
         });
+        setLoading(false);
         console.log("Called");
       })
       .catch((err) => {
-        console.log(err);
+        setLoading(false);
+        console.error(err);
       });
   }, [filterCategory, productData.page, searchKeyword]);
 
@@ -63,8 +69,12 @@ const Discover = () => {
       <h1 className={classes.header}>Discover</h1>
       <SearchForm onFormSubmit={formSubmitHandler} />
       <SearchFilter filterCategory={filterCategory} filterClickHandler={filterClickHandler} />
-      <ProductList productList={productData.productList} />
-      <Pagination page={productData.page} pages={productData.pages} />
+      {!loading ? <ProductList productList={productData.productList} /> : <LoadingSpinner />}
+      <Pagination
+        page={productData.page}
+        pages={productData.pages}
+        setProductData={setProductData}
+      />
     </div>
   );
 };
@@ -119,8 +129,10 @@ const ProductList: React.FC<ProductListProps> = ({ productList }) => (
 
 const Product: React.FC<ProductProps> = ({ product }) => {
   const base64String = Buffer.from(product.image.buffer.data).toString("base64");
+  const navigate = useNavigate();
+
   return (
-    <div className={classes.product}>
+    <div className={classes.product} onClick={() => navigate(`/product/${product._id}`)}>
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
       <h1>{product.name}</h1>
       <h4>{product.price}</h4>
