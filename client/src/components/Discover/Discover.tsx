@@ -8,11 +8,11 @@ import {
   SearchFilterProps,
   ProductListProps,
   ProductProps,
+  PaginationProps,
 } from "./Discover.types";
 
 import { BsSearch } from "react-icons/bs";
 
-import Pagination from "../Pagination/Pagination";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 
 import classes from "./Discover.module.css";
@@ -30,7 +30,6 @@ const Discover = () => {
   const formSubmitHandler = (e: any) => {
     e.preventDefault();
     setSearchKeyword(e.target.keyword.value);
-    e.target.keyword.value = "";
   };
 
   const filterClickHandler = (category: string) => {
@@ -83,7 +82,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onFormSubmit }) => (
   <div className={classes["search-form"]}>
     <form onSubmit={onFormSubmit}>
       <BsSearch />
-      <input name="keyword" placeholder="Search Product" />
+      <input name="keyword" placeholder="Search Product" autoComplete="off" />
     </form>
   </div>
 );
@@ -136,6 +135,32 @@ const Product: React.FC<ProductProps> = ({ product }) => {
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
       <h1>{product.name}</h1>
       <h4>{product.price}</h4>
+    </div>
+  );
+};
+
+const Pagination: React.FC<PaginationProps> = ({ page, pages, setProductData }) => {
+  const pagesArr = [];
+
+  const minPage = page - 6 > 0 ? page - 6 : 1;
+  const maxPage = page + 6 < pages ? page + 6 : pages;
+
+  for (let i = minPage; i <= maxPage; i++) {
+    pagesArr.push(i);
+  }
+  return (
+    <div className={classes.pagination}>
+      <ul>
+        {pagesArr.map((element) => (
+          <li
+            id={page === element ? classes.selected : ""}
+            key={element}
+            onClick={() => setProductData((prev: any) => ({ ...prev, page: element }))}
+          >
+            {element}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

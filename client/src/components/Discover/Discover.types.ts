@@ -17,4 +17,10 @@ type ProductProps = {
   product: ProductType;
 };
 
-export type { SearchFormProps, SearchFilterProps, ProductListProps, ProductProps };
+type PaginationProps = {
+  page: number;
+  pages: number;
+  setProductData: (productData: any) => void;
+};
+
+export type { SearchFormProps, SearchFilterProps, ProductListProps, ProductProps, PaginationProps };
