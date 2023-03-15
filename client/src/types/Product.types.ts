@@ -1,4 +1,4 @@
-type ProductType = {
+interface ProductType {
   _id: string;
   name: string;
   image: any;
@@ -6,6 +6,10 @@ type ProductType = {
   category: string;
   description: string;
   price: number;
-};
+}
 
-export type { ProductType };
+interface CartProductType extends ProductType {
+  cartQuantity: number;
+}
+
+export type { ProductType, CartProductType };

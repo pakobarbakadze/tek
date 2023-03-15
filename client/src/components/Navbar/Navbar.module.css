@@ -1,0 +1,22 @@
+.navbar {
+  margin: 50px 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.navbar h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 38px;
+}
+
+.navbar svg {
+  font-size: 28px;
+}
+
+.menu {
+  display: flex;
+  gap: 10px;
+}

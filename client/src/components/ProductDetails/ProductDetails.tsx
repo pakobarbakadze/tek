@@ -1,22 +1,31 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Buffer } from "buffer";
 
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { CgShoppingBag } from "react-icons/cg";
 
+import { useAppDispatch } from "../../redux/hooks";
+import { addProduct } from "../../redux/cartSlice";
+
+import { ProductType } from "../../types/Product.types";
 import { ProductInfoProps } from "./ProductDetails.types";
 
 import LoadingSpinner from "../../ui/LoadingSpinner";
 
 import classes from "./ProductDetails.module.css";
 import Button from "../../ui/Button/Button";
+import Navbar from "../Navbar/Navbar";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState<ProductType>();
+
+  const dispatch = useAppDispatch();
+
+  const addToCartHandler = () => {
+    if (product) dispatch(addProduct({ ...product, cartQuantity: 1 }));
+  };
 
   useEffect(() => {
     axios
@@ -37,25 +46,17 @@ const ProductDetails = () => {
 
   return (
     <div className={classes.container}>
-      <Header />
-      {product ? <ProductInfo product={product} /> : <LoadingSpinner />}
+      <Navbar title={"Details"} />
+      {product ? (
+        <ProductInfo product={product} onButtonClick={addToCartHandler} />
+      ) : (
+        <LoadingSpinner />
+      )}
     </div>
   );
 };
 
-const Header = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div className={classes.header}>
-      <AiOutlineArrowLeft onClick={() => navigate("/")} />
-      <h1>Details</h1>
-      <RxHamburgerMenu />
-    </div>
-  );
-};
-
-const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
+const ProductInfo: React.FC<ProductInfoProps> = ({ product, onButtonClick }) => {
   const base64String = Buffer.from(product?.image.buffer.data).toString("base64");
 
   return (
@@ -68,7 +69,10 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           <p>Price</p>
           <h3>{product?.price}</h3>
         </div>
-        <Button>{<CgShoppingBag />}Add to Cart</Button>
+        <Button onClick={onButtonClick}>
+          <CgShoppingBag />
+          Add to Cart
+        </Button>
       </div>
     </div>
   );
