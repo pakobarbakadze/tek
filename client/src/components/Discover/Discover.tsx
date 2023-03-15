@@ -55,7 +55,6 @@ const Discover = () => {
           productList: res.data.products,
         });
         setLoading(false);
-        console.log("Called");
       })
       .catch((err) => {
         setLoading(false);

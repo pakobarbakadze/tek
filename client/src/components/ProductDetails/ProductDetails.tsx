@@ -5,12 +5,14 @@ import { Buffer } from "buffer";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { CgShoppingBag } from "react-icons/cg";
 
 import { ProductInfoProps } from "./ProductDetails.types";
 
 import LoadingSpinner from "../../ui/LoadingSpinner";
 
 import classes from "./ProductDetails.module.css";
+import Button from "../../ui/Button/Button";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -61,6 +63,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
       <h2>{product?.name}</h2>
       <p>{product?.description}</p>
+      <div className={classes["add-to-cart"]}>
+        <div className={classes.price}>
+          <p>Price</p>
+          <h3>{product?.price}</h3>
+        </div>
+        <Button>{<CgShoppingBag />}Add to Cart</Button>
+      </div>
     </div>
   );
 };

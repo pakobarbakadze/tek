@@ -1,0 +1,19 @@
+.container button {
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-size: 18px;
+  padding: 10px 0;
+
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.container button svg {
+  font-size: 22px;
+  margin-bottom: 3px;
+}

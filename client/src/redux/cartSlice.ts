@@ -14,7 +14,6 @@ const initialState: CartState = {
 
 export const cartSlice = createSlice({
   name: "cart",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     addProduct: (state, action: PayloadAction<ProductType>) => {

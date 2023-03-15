@@ -33,3 +33,17 @@
   color: var(--font-color-secondary);
   line-height: 24px;
 }
+
+.add-to-cart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
+}
+
+.price h3 {
+  font-size: 24px;
+}
+
+.price p {
+  line-height: 1;
+}
