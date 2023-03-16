@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { CgShoppingBag } from "react-icons/cg";
 
 import classes from "./Navbar.module.css";
+import Cart from "../Cart/Cart";
 
 type NavbarProps = {
   title: string;
@@ -20,9 +21,10 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
       <AiOutlineArrowLeft onClick={() => navigate("/")} />
       <h1>{title}</h1>
       <div className={classes.menu}>
-        <CgShoppingBag />
+        <CgShoppingBag onClick={() => setIsCartActive((prev) => !prev)} />
         <RxHamburgerMenu />
       </div>
+      {isCartActive && <Cart />}
     </div>
   );
 };

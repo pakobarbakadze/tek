@@ -1,3 +1,7 @@
+.container {
+  position: relative;
+}
+
 .navbar {
   margin: 50px 0 10px;
   display: flex;
