@@ -3,39 +3,75 @@ import { Buffer } from "buffer";
 
 import { HiOutlineTrash } from "react-icons/hi";
 
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { removeProduct } from "../../redux/cartSlice";
 
 import { CartCardProps } from "./Cart.types";
+import { CartProductType } from "../../types/Product.types";
+
+import Counter from "../../ui/Counter/Counter";
 
 import classes from "./Cart.module.css";
 
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
-  //console.log(cart);
+  const dispatch = useAppDispatch();
+
+  const removeClickHandler = (cartItem: CartProductType) => {
+    dispatch(removeProduct(cartItem));
+  };
 
   return (
     <div className={classes.cart}>
-      {cart.product.map((item) => (
-        <CartCard key={item._id} item={item} />
-      ))}
+      <div>
+        {cart.product.map((cartItem) => (
+          <CartCard key={cartItem._id} cartItem={cartItem} onRemoveClick={removeClickHandler} />
+        ))}
+      </div>
+      <Fees />
     </div>
   );
 };
 
-const CartCard: React.FC<CartCardProps> = ({ item }) => {
-  const base64String = Buffer.from(item.image.buffer.data).toString("base64");
+const CartCard: React.FC<CartCardProps> = ({ cartItem, onRemoveClick }) => {
+  const base64String = Buffer.from(cartItem.image.buffer.data).toString("base64");
   return (
     <div className={classes["cart-card"]}>
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
       <div className={classes["cart-card-info"]}>
-        <h2>{item.name}</h2>
-        <h3>{item.price}</h3>
+        <h2>{cartItem.name}</h2>
+        <h3>{cartItem.price}</h3>
       </div>
       <div className={classes["cart-card-controller"]}>
-        <HiOutlineTrash />
-        <div className={classes.counter}>
-          <p>counter</p>
-        </div>
+        <HiOutlineTrash onClick={() => onRemoveClick(cartItem)} />
+        <Counter cartItem={cartItem} />
+      </div>
+    </div>
+  );
+};
+
+const Fees = () => {
+  const cart = useAppSelector((state) => state.cart);
+
+  const subtotal = cart.totalPrice;
+  const vat = (cart.totalPrice * 20) / 100;
+  const total = subtotal + vat;
+
+  return (
+    <div className={classes.fees}>
+      <ul>
+        <li>
+          <h2>Sub-total</h2> <h3>{subtotal}</h3>
+        </li>
+        <li>
+          <h2>VAT (20%)</h2> <h3>{vat}</h3>
+        </li>
+        <li>
+          <h2>Shipping fee</h2> <h3>{0}</h3>
+        </li>
+      </ul>
+      <div className={classes.total}>
+        <h2>Total</h2> <h3>{total}</h3>
       </div>
     </div>
   );

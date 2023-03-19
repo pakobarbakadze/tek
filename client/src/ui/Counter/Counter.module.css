@@ -1,0 +1,32 @@
+.counter {
+  align-self: flex-end;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.counter span {
+  width: 100%;
+  aspect-ratio: 1/1;
+  text-align: center;
+  user-select: none;
+}
+
+.counter span:nth-child(odd) {
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+.counter span svg {
+  height: 100%;
+  display: block;
+  font-size: 26px;
+  margin: auto;
+  padding: 5px;
+  color: black;
+}
+
+.counter span.num {
+  font-size: 22px;
+}

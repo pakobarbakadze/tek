@@ -1,7 +1,8 @@
 import { CartProductType } from "../../types/Product.types";
 
 type CartCardProps = {
-  item: CartProductType;
+  cartItem: CartProductType;
+  onRemoveClick: (cartItem: CartProductType) => void;
 };
 
 export type { CartCardProps };
