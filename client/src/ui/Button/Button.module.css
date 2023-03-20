@@ -1,11 +1,13 @@
 .container button {
   width: 100%;
+  max-width: 188.5px;
   background-color: black;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 18px;
   padding: 10px 0;
+  cursor: pointer;
 
   display: flex;
   gap: 5px;

@@ -60,19 +60,21 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product, onButtonClick }) => 
   const base64String = Buffer.from(product?.image.buffer.data).toString("base64");
 
   return (
-    <div className={classes["product-info"]}>
+    <div className={classes["product-details"]}>
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
-      <h2>{product?.name}</h2>
-      <p>{product?.description}</p>
-      <div className={classes["add-to-cart"]}>
-        <div className={classes.price}>
-          <p>Price</p>
-          <h3>{product?.price}</h3>
+      <div className={classes.info}>
+        <h2>{product?.name}</h2>
+        <p>{product?.description}</p>
+        <div className={classes["add-to-cart"]}>
+          <div className={classes.price}>
+            <p>Price</p>
+            <h3>{product?.price}</h3>
+          </div>
+          <Button onClick={onButtonClick}>
+            <CgShoppingBag />
+            Add to Cart
+          </Button>
         </div>
-        <Button onClick={onButtonClick}>
-          <CgShoppingBag />
-          Add to Cart
-        </Button>
       </div>
     </div>
   );

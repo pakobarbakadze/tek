@@ -32,20 +32,28 @@ export const cartSlice = createSlice({
       action: PayloadAction<{ quantity: number; cartItem: CartProductType }>
     ) => {
       const itemIndex = getItemIndex(state, action.payload.cartItem._id);
-      if (state.product[itemIndex].cartQuantity > 1 || action.payload.cartItem.cartQuantity > 0) {
-        state.product[itemIndex].cartQuantity += action.payload.quantity;
-      }
+      const item = state.product[itemIndex];
 
+      // Update totalPrice and totalQuantity states.
       if (action.payload.quantity > 0) {
         state.totalPrice += action.payload.cartItem.price;
         state.totalQuantity++;
-      } else {
+      } else if (item.cartQuantity > 1) {
         state.totalPrice -= action.payload.cartItem.price;
         state.totalQuantity--;
+      }
+
+      // Increase or decrease cartQuantity of the item.
+      if (item.cartQuantity > 1 || action.payload.quantity > 0) {
+        item.cartQuantity += action.payload.quantity;
       }
     },
     removeProduct: (state, action: PayloadAction<CartProductType>) => {
       const itemIndex = getItemIndex(state, action.payload._id);
+      const item = state.product[itemIndex];
+
+      state.totalPrice -= action.payload.price * item.cartQuantity;
+      state.totalQuantity -= item.cartQuantity;
       state.product.splice(itemIndex, 1);
     },
   },

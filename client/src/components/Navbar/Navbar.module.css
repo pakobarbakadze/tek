@@ -1,26 +1,37 @@
-.container {
-  position: relative;
-}
-
 .navbar {
   margin: 50px 0 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: relative;
 }
 
 .navbar h1 {
+  display: flex;
   font-size: 24px;
   font-weight: 700;
-  margin-left: 38px;
+  justify-content: center;
 }
 
 .navbar svg {
   font-size: 28px;
+  cursor: pointer;
+  outline: none;
+}
+
+.home {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .menu {
   display: flex;
+  justify-content: flex-end;
   gap: 10px;
+  width: 100%;
+}
+
+.menu svg {
+  opacity: 0.6;
 }

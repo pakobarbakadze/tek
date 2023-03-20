@@ -16,6 +16,7 @@ import { BsSearch } from "react-icons/bs";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 
 import classes from "./Discover.module.css";
+import Navbar from "../Navbar/Navbar";
 
 const Discover = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -64,7 +65,7 @@ const Discover = () => {
 
   return (
     <div className={classes.container}>
-      <h1 className={classes.header}>Discover</h1>
+      <Navbar title="Discover" />
       <SearchForm onFormSubmit={formSubmitHandler} />
       <SearchFilter filterCategory={filterCategory} filterClickHandler={filterClickHandler} />
       {!loading ? <ProductList productList={productData.productList} /> : <LoadingSpinner />}
@@ -130,7 +131,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const navigate = useNavigate();
 
   return (
-    <div className={classes.product} onClick={() => navigate(`/product/${product._id}`)}>
+    <div className={classes["product-card"]} onClick={() => navigate(`/product/${product._id}`)}>
       <img src={`data:image/png;base64,${base64String}`} alt="product preview" />
       <h1>{product.name}</h1>
       <h4>{product.price}</h4>
