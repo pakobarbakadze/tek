@@ -1,5 +1,6 @@
 import React from "react";
 import { Buffer } from "buffer";
+import { useNavigate } from "react-router-dom";
 
 import { HiOutlineTrash } from "react-icons/hi";
 
@@ -10,12 +11,14 @@ import { CartCardProps } from "./Cart.types";
 import { CartProductType } from "../../types/Product.types";
 
 import Counter from "../../ui/Counter/Counter";
+import Button from "../../ui/Button/Button";
 
 import classes from "./Cart.module.css";
 
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
 
   const removeClickHandler = (cartItem: CartProductType) => {
     dispatch(removeProduct(cartItem));
@@ -29,6 +32,7 @@ const Cart = () => {
         ))}
       </div>
       <Fees />
+      <Button onClick={() => navigate('/checkout')}>Check Out</Button>
     </div>
   );
 };
